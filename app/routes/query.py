@@ -1,11 +1,21 @@
+# routes/query.py
+
 from flask import Blueprint, request, jsonify
 from app.services.rag_service import RagService
+from app.services.chunking_service import ChunkingService
+from app.services.reranking_service import RerankingService
 from app.repositories.vector_repo import VectorRepo
 
 query = Blueprint("query", __name__)
 
 repo = VectorRepo()
-rag = RagService(repo=repo)
+chunker = ChunkingService()
+reranker = RerankingService()
+rag = RagService(repo=repo, chunker=chunker, reranker=reranker)
+
+
+
+# ... rest of file unchanged
 
 @query.route("/query", methods=["POST"])
 def query_knowledge_base():
