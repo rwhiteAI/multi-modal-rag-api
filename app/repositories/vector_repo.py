@@ -26,6 +26,11 @@ class VectorRepo:
             metadatas=chunk_metadatas
         )
 
+    
+    def delete_by_source(self, source_file: str, media_type: str):
+        collection = self._get_collection(media_type)
+        collection.delete(where={"source_file": source_file})
+
     def search_similar(self, query: str, media_type: str, n_results: int = 3):
         collection = self._get_collection(media_type)
         results = collection.query(
